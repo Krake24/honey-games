@@ -17,7 +17,6 @@ if not "users" in db:
    db["users"] = {}
 
 users = db["users"]
-print(users)
 
 intents = disnake.Intents.default()
 intents.members = True
@@ -54,7 +53,6 @@ async def game_prizes_config_reset(inter):
 @bot.slash_command(name="game_prizes_config")
 async def game_prizes_config(inter, first: str = commands.Param(choices=rewards["first"]), second: str = commands.Param(choices=rewards["second"]), third: str = commands.Param(choices=rewards["third"])):
     user = inter.user.id
-    print(user)
     users[user] = {
        "first" : first,
        "second" : second,
