@@ -1,0 +1,43 @@
+{
+    "first" : [
+        "Choose each time",
+        "5 Queen Upgrade Shard",
+        "5 Bee Shards",
+        "2 Queen Shards",
+        "5 Royal Jelly",
+        "5 Mood Stabilizer",
+        "25 Health",
+        "25 Capacity",
+        "25 Attack",
+        "25 Defense",
+        "25 Agility",
+        "25 Capacity",
+        "25 Recovery",
+        "25 Endurance"
+    ],
+    "second" : [
+        "Choose each time",
+        "2 Queen Shards",
+        "5 Royal Jelly",
+        "5 Mood Stabilizer",
+        "25 Health",
+        "25 Capacity",
+        "25 Attack",
+        "25 Defense",
+        "25 Agility",
+        "25 Capacity",
+        "25 Recovery",
+        "25 Endurance"
+    ],
+    "third" : [
+        "Choose each time",
+        "25 Health",
+        "25 Capacity",
+        "25 Attack",
+        "25 Defense",
+        "25 Agility",
+        "25 Capacity",
+        "25 Recovery",
+        "25 Endurance"
+    ]
+}
