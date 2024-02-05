@@ -21,7 +21,7 @@ users = db["users"]
 intents = disnake.Intents.default()
 intents.members = True
 
-bot = commands.InteractionBot(intents=intents)
+bot = commands.InteractionBot(intents=intents, activity=disnake.Game(name="Honeyland"))
 
 f = open("rewards.json", "r")
 rewards = json.loads(f.read())
