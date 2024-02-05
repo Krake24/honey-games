@@ -43,7 +43,6 @@ async def game_prizes_config_reset(inter):
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
-      ephemeral=True,
       description=f'''You default prizes have been reset.
       If you win a prize you will be asked which one you'll get each time.
       '''
