@@ -37,7 +37,7 @@ def get_user_reward(user, placement):
 def get_account_info(user):
   info = ""
   if user in users and "account_name" in users[user] and "wallet" in users[user]:
-    info = f"=> {users[user]['account_name']} - ...{users[user]['wallet']}"
+    info = f":arrow_right: {users[user]['account_name']} - ...{users[user]['wallet']}"
   return info 
 
 @bot.event
@@ -123,10 +123,11 @@ async def game_default_prizes(
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
-      description=f'''Your default prizes have been set to the following
-      First place: {get_user_reward(user, "first")}
-      Second place: {get_user_reward(user, "second")}
-      Third place: {get_user_reward(user, "third")}
+      description=f'''Your default prizes have been set to the following:
+
+      :first_place: {get_user_reward(user, "first")}
+      :second_place: {get_user_reward(user, "second")}
+      :third_place: {get_user_reward(user, "third")}
 
       If you want to change these rewards run this command again. 
       {hint}
@@ -139,9 +140,9 @@ async def game_winners(inter, first: disnake.User, second: disnake.User, third: 
     embed=disnake.Embed(
       title="Game Winners",
       color=disnake.Colour.yellow(),
-      description=f'''First place: <@{first.id}> ({get_user_reward(first.id, "first")} {get_account_info(first.id)})
-      Second place: <@{second.id}> ({get_user_reward(second.id, "second")} {get_account_info(second.id)})
-      Third place: <@{third.id}> ({get_user_reward(third.id, "third")} {get_account_info(third.id)})
+      description=f''':first_place: <@{first.id}> ({get_user_reward(first.id, "first")} {get_account_info(first.id)})
+      :second_place: <@{second.id}> ({get_user_reward(second.id, "second")} {get_account_info(second.id)})
+      :third_place: <@{third.id}> ({get_user_reward(third.id, "third")} {get_account_info(third.id)})
       '''
     )
     await inter.response.send_message(embed=embed)
