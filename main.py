@@ -36,8 +36,8 @@ def get_user_reward(user, placement):
 
 def get_account_info(user):
   info = ""
-  if user in users and "account_name" in users[user] and "wallet" in users[user]:
-    info = f":arrow_right: {users[user]['account_name']} - ...{users[user]['wallet']}"
+  if user in users and "account_name" in users[user]:
+    info = f":arrow_right: {users[user]['account_name']}"
   return info 
 
 @bot.event
@@ -61,7 +61,6 @@ async def game_prizes_config_reset(inter):
 @bot.slash_command(name="game_account_reset", description="add info to your Honeyland account to facilitate paying out prizes")
 async def game_account_reset(inter):
     del users[inter.user.id]["account_name"]
-    del users[inter.user.id]["wallet"]
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
@@ -73,8 +72,7 @@ async def game_account_reset(inter):
 @bot.slash_command(name="game_account", description="add info to your Honeyland account to facilitate paying out prizes")
 async def game_account(
    inter,
-   ingame_name: str, 
-   wallet_last_four_characters: str = commands.Param(max_length=4),
+   ingame_name: str
    ):
     user = inter.user.id
 
@@ -82,7 +80,6 @@ async def game_account(
        users[user]={}
 
     users[user]["account_name"] = ingame_name
-    users[user]["wallet"] = wallet_last_four_characters
     
     hint=""
     if not "first" in users[user]:
@@ -93,7 +90,6 @@ async def game_account(
       color=disnake.Colour.yellow(),
       description=f'''Your account settings have been saved
       Honeyland Account Name: {ingame_name}
-      Wallet: ...{wallet_last_four_characters}
 
       {hint}
       '''
