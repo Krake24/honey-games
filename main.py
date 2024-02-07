@@ -52,9 +52,10 @@ async def game_prizes_config_reset(inter):
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
-      description=f'''Your default prizes have been reset.
-      If you win a prize you will be asked which one you'll get each time.
-      '''
+      description=
+f'''Your default prizes have been reset.
+If you win a prize you will be asked which one you'll get each time.
+'''
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
@@ -64,8 +65,9 @@ async def game_account_reset(inter):
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
-      description=f'''Your account details have been reset. The game hosts will ask you to provide these, should you win a prize.
-      '''
+      description=
+f'''Your account details have been reset. The game hosts will ask you to provide these, should you win a prize.
+'''
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
@@ -88,11 +90,12 @@ async def game_account(
     embed=disnake.Embed(
       title="Game Account Setting",
       color=disnake.Colour.yellow(),
-      description=f'''Your account settings have been saved
-      Honeyland Account Name: {ingame_name}
+      description=
+f'''Your account settings have been saved
+Honeyland Account Name: {ingame_name}
 
-      {hint}
-      '''
+{hint}
+'''
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
@@ -119,15 +122,16 @@ async def game_default_prizes(
     embed=disnake.Embed(
       title="Game Prizes",
       color=disnake.Colour.yellow(),
-      description=f'''Your default prizes have been set to the following:
+      description=
+f'''Your default prizes have been set to the following:
 
-      :first_place: {get_user_reward(user, "first")}
-      :second_place: {get_user_reward(user, "second")}
-      :third_place: {get_user_reward(user, "third")}
+:first_place: {get_user_reward(user, "first")}
+:second_place: {get_user_reward(user, "second")}
+:third_place: {get_user_reward(user, "third")}
 
-      If you want to change these rewards run this command again. 
-      {hint}
-      '''
+If you want to change these rewards run this command again. 
+{hint}
+'''
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
@@ -136,10 +140,11 @@ async def game_winners(inter, first: disnake.User, second: disnake.User, third: 
     embed=disnake.Embed(
       title="Game Winners",
       color=disnake.Colour.yellow(),
-      description=f''':first_place: <@{first.id}> ({get_user_reward(first.id, "first")} {get_account_info(first.id)})
-      :second_place: <@{second.id}> ({get_user_reward(second.id, "second")} {get_account_info(second.id)})
-      :third_place: <@{third.id}> ({get_user_reward(third.id, "third")} {get_account_info(third.id)})
-      '''
+      description=
+f''':first_place: <@{first.id}> ({get_user_reward(first.id, "first")} {get_account_info(first.id)})
+:second_place: <@{second.id}> ({get_user_reward(second.id, "second")} {get_account_info(second.id)})
+:third_place: <@{third.id}> ({get_user_reward(third.id, "third")} {get_account_info(third.id)})
+'''
     )
     await inter.response.send_message(embed=embed)
 
