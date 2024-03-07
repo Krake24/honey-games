@@ -78,7 +78,10 @@ async def game_account(inter):
     if not user in users:
        users[user]={}
 
-    ingame_name = users[user]["account_name"]
+    if "account_name" in users[user]:
+      ingame_name = users[user]["account_name"]
+    else:
+      ingame_name = "---"
     
     hint=""
     if not "first" in users[user]:
