@@ -71,6 +71,35 @@ f'''Your account details have been reset. The game hosts will ask you to provide
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
+@bot.slash_command(name="game_show_defaults", description="shows your current settings")
+async def game_account(inter):
+    user = inter.user.id
+
+    if not user in users:
+       users[user]={}
+
+    ingame_name = users[user]["account_name"]
+    
+    hint=""
+    if not "first" in users[user]:
+       hint = "You haven't selected default prizes yet. You can do so by using the command /game_default_prizes"
+
+    embed=disnake.Embed(
+      title="Game Account Setting",
+      color=disnake.Colour.yellow(),
+      description=
+f'''These are your current settings:
+
+**Prizes:**
+:first_place: {get_user_reward(user, "first")}
+:second_place: {get_user_reward(user, "second")}
+:third_place: {get_user_reward(user, "third")}
+
+**Account**
+Honeyland Account Name: {ingame_name}
+''')
+    await inter.response.send_message(embed=embed, ephemeral=True)
+
 @bot.slash_command(name="game_account", description="add info to your Honeyland account to facilitate paying out prizes")
 async def game_account(
    inter,
