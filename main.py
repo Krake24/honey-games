@@ -26,13 +26,17 @@ bot = commands.InteractionBot(intents=intents, activity=disnake.Game(name="Honey
 f = open("rewards.json", "r")
 rewards = json.loads(f.read())
 
+def or_else(result, default):
+   if result: 
+      return result
+   return default
 
 def get_user_reward(user, placement):
    if user in users and placement in users[user]:
       reward = users[user][placement]
       if "Choose each time" != reward:
         return reward
-   return "Please choose a prize and tag your game host"
+   return None
 
 def get_account_info(user):
   info = ""
@@ -94,9 +98,9 @@ async def game_account(inter):
 f'''These are your current settings:
 
 **Prizes:**
-:first_place: {get_user_reward(user, "first")}
-:second_place: {get_user_reward(user, "second")}
-:third_place: {get_user_reward(user, "third")}
+:first_place: {or_else(get_user_reward(user, "first"), "Please choose a prize")}
+:second_place: {or_else(get_user_reward(user, "second"), "Please choose a prize")}
+:third_place: {or_else(get_user_reward(user, "third"), "Please choose a prize")}
 
 **Account**
 Honeyland Account Name: {ingame_name}
@@ -157,9 +161,9 @@ async def game_default_prizes(
       description=
 f'''Your default prizes have been set to the following:
 
-:first_place: {get_user_reward(user, "first")}
-:second_place: {get_user_reward(user, "second")}
-:third_place: {get_user_reward(user, "third")}
+:first_place: {or_else(get_user_reward(user, "first"), "Please choose a prize")}
+:second_place: {or_else(get_user_reward(user, "second"), "Please choose a prize")}
+:third_place: {or_else(get_user_reward(user, "third"), "Please choose a prize")}
 
 If you want to change these rewards run this command again. 
 {hint}
@@ -173,9 +177,16 @@ async def game_winners(inter, first: disnake.User, second: disnake.User, third: 
       title="Game Winners",
       color=disnake.Colour.yellow(),
       description=
-f''':first_place: <@{first.id}> ({get_user_reward(first.id, "first")} {get_account_info(first.id)})
-:second_place: <@{second.id}> ({get_user_reward(second.id, "second")} {get_account_info(second.id)})
-:third_place: <@{third.id}> ({get_user_reward(third.id, "third")} {get_account_info(third.id)})
+f''':first_place: <@{first.id}> ({or_else(get_user_reward(first.id, "first"), "Please setup your gaming account (see below)")} {get_account_info(first.id)})
+:second_place: <@{second.id}> ({or_else(get_user_reward(second.id, "second"), "Please setup your gaming account (see below)")} {get_account_info(second.id)})
+:third_place: <@{third.id}> ({or_else(get_user_reward(third.id, "third"), "Please setup your gaming account (see below)")} {get_account_info(third.id)})
+
+**IMPORTANT!**
+Everyone who plays discord games, in order to be eligible for prizes, please set up your game profile by entering username and the prize of your choice as follows: 
+
+Make sure you are in ⁠<#933556625652989973>
+Step 1: use the /game_account command and enter your in game username
+Step 2: Use the /game_default_prizes command and choose your prizes for first, second, and third place from the lists
 '''
     )
     await inter.response.send_message(embed=embed)
