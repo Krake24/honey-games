@@ -99,7 +99,9 @@ f'''These are your current settings:
 
 **Prizes:**
 :first_place: {or_else(get_user_reward(user, "first"), "Please choose a prize")}
+
 :second_place: {or_else(get_user_reward(user, "second"), "Please choose a prize")}
+
 :third_place: {or_else(get_user_reward(user, "third"), "Please choose a prize")}
 
 **Account**
@@ -171,9 +173,9 @@ If you want to change these rewards run this command again.
     )
     await inter.response.send_message(embed=embed, ephemeral=True)
 
-@bot.slash_command(name="game_winners", default_member_permissions=disnake.Permissions(moderate_members=True), description="Print out the winners and their account and prize info")
+@bot.slash_command(name="game_winners", default_member_permissions=disnake.Permissions(moderate_members=True), description="Print the winners and their account and prize info")
 async def game_winners(inter, first: disnake.User, second: disnake.User, third: disnake.User):
-    embed=disnake.Embed(
+   embed=disnake.Embed(
       title="Game Winners",
       color=disnake.Colour.yellow(),
       description=
@@ -189,7 +191,77 @@ Step 1: use the /game_account command and enter your in game username
 Step 2: Use the /game_default_prizes command and choose your prizes for first, second, and third place from the lists
 '''
     )
-    await inter.response.send_message(embed=embed)
+   await inter.response.send_message(embed=embed)
 
+winners={}
+
+class Confirm(disnake.ui.Button):
+    def __init__(self):
+        super().__init__(
+            label="Announce Winners",
+            style=disnake.ButtonStyle.green
+        )
+
+    async def callback(self, inter: disnake.MessageInteraction):
+      if not {'first', 'second', 'third'} <= set(winners):
+         inter.response
+      first=""
+      if "first" in winners:
+         for winner in winners["first"]:
+            first+=f':first_place: <@{winner.id}> ({or_else(get_user_reward(winner.id, "first"), "Please setup your gaming account (see below)")} {get_account_info(winner.id)})\n'
+
+      second=""
+      if "second" in winners:
+         for winner in winners["second"]:
+            second+=f':second_place: <@{winner.id}> ({or_else(get_user_reward(winner.id, "second"), "Please setup your gaming account (see below)")} {get_account_info(winner.id)})\n'
+
+      third=""
+      if "third" in winners:
+         for winner in winners["third"]:
+            third+=f':third_place: <@{winner.id}> ({or_else(get_user_reward(winner.id, "third"), "Please setup your gaming account (see below)")} {get_account_info(winner.id)})\n'
+
+      message=f'''
+{first}
+{second}
+{third}
+**IMPORTANT!**
+Everyone who plays discord games, in order to be eligible for prizes, please set up your game profile by entering username and the prize of your choice as follows: 
+
+Make sure you are in ⁠<#933556625652989973>
+Step 1: use the /game_account command and enter your in game username
+Step 2: Use the /game_default_prizes command and choose your prizes for first, second, and third place from the lists
+'''
+      await inter.response.send_message("Winners", embed=disnake.Embed(
+         title="Game Winners",
+         color=disnake.Colour.yellow(),
+         description=message
+      ))
+
+class Winner(disnake.ui.UserSelect):
+    def __init__(self, place):
+        super().__init__(
+            placeholder=f"Choose {place} place winner(s)",
+            min_values=1,
+            max_values=25,
+        )
+        self.place = place
+
+    async def callback(self, inter: disnake.MessageInteraction):
+        winners[self.place]=self.values
+        await inter.response.defer()
+
+class WinnerView(disnake.ui.View):
+    def __init__(self):
+        super().__init__()
+
+        # Add the dropdown to our view object.
+        self.add_item(Winner("first"))
+        self.add_item(Winner("second"))
+        self.add_item(Winner("third"))
+        self.add_item(Confirm())
+
+@bot.slash_command(name="game_select_winners", default_member_permissions=disnake.Permissions(moderate_members=True), description="Select and print the winners and their account and prize info with")
+async def game_winners(inter):
+    await inter.send("Select Winners", view=WinnerView(), ephemeral=True)
 
 bot.run(os.environ['botToken'])
